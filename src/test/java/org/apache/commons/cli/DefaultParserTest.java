@@ -120,4 +120,16 @@ public class DefaultParserTest extends AbstractParserTestCase {
 
         assertEquals("Confirm -b \"arg\" strips quotes",  "quoted string", cl.getOptionValue("b"));
     }
+
+    @Test 
+    public void testBug306() throws Exception {
+        final String[] args = {"--one","arg1","-2","arg2"};
+
+        Options options1 = new Options();
+        
+        options1.addOption(Option.builder("1").longOpt("one").hasArgs().build());
+        options1.addOption(Option.builder("2").longOpt("two").hasArg().required().build());
+
+        final CommandLine cl = parser.parse(options1, args);
+    }
 }
